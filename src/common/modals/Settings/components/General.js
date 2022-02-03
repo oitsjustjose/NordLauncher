@@ -595,7 +595,7 @@ const General = () => {
         </div>
         <p>
           Updates are hosted only on{' '}
-          <a href="https://github.com/oitsjustjose/GDLauncher/releases">
+          <a href="https://github.com/oitsjustjose/NordLauncher/releases">
             GitHub
           </a>{' '}
           as this is a fork of GorillaDev&apos;s GDLauncher.

@@ -200,9 +200,6 @@ const Instance = ({ instanceName }) => {
   const manageInstance = () => {
     dispatch(openModal('InstanceManager', { instanceName }));
   };
-  // const openBisectModal = () => {
-  //   dispatch(openModal('BisectHosting'));
-  // };
   const instanceExportCurseForge = () => {
     dispatch(openModal('InstanceExportCurseForge', { instanceName }));
   };

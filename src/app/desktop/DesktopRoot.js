@@ -127,8 +127,6 @@ function DesktopRoot({ store }) {
       });
     }
 
-    dispatch(openModal('ChangeLogs'));
-
     if (process.env.NODE_ENV === 'development' && currentAccount) {
       dispatch(received(features.mcAuthentication));
       dispatch(push('/home'));

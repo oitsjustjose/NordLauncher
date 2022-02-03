@@ -4,7 +4,6 @@ const path = require('path');
 const axios = require('axios');
 const fse = require('fs-extra');
 const dotenv = require('dotenv');
-const rawChangeLog = require('../src/common/modals/ChangeLogs/changeLog');
 
 dotenv.config();
 
@@ -43,54 +42,7 @@ const main = async () => {
       throw new Error('Could not find release. Creating one.');
     }
   } catch (err) {
-    console.log(err);
-
-    const getChangeLog = () => {
-      let changeLog = '';
-      for (const element in rawChangeLog) {
-        if (rawChangeLog[element].length) {
-          changeLog += `### ${element
-            .charAt(0)
-            .toUpperCase()}${element.substring(1)}\n`;
-
-          for (const e of rawChangeLog[element]) {
-            if (!e?.advanced?.cm || !e?.header || !e?.content) {
-              continue;
-            }
-            const prSplit = e?.advanced?.pr && e?.advanced?.pr.split('/');
-            const advanced =
-              ` ([${e?.advanced?.cm}](https://github.com/oitsjustjose/NordLauncher/commit/${e?.advanced?.cm})` +
-              `${
-                prSplit
-                  ? ` | [#${e?.advanced.pr}](https://github.com/oitsjustjose/NordLauncher/pull/${prSplit[0]}` +
-                    `${prSplit?.[1] ? `/commits/${prSplit[1]}` : ''})`
-                  : ''
-              })`;
-            const notes = `- **${e?.header || ''}** ${e?.content || ''}`;
-            changeLog += `${notes + advanced} \n`;
-          }
-        }
-      }
-      return changeLog;
-    };
-
-    const { data: newRelease } = await axios.default.post(
-      'https://api.github.com/repos/oitsjustjose/NordLauncher/releases',
-      {
-        tag_name: `v${version}`,
-        name: `v${version}`,
-        draft: true,
-        prerelease: version.includes('beta'),
-        body: getChangeLog()
-      },
-      {
-        headers: {
-          Authorization: `token ${process.env.GH_ACCESS_TOKEN_RELEASES}`
-        }
-      }
-    );
-    uploadUrl = newRelease.upload_url;
-    console.log('New release tag created.');
+    /* noop */
   }
 
   const deployFiles = await readdir(deployFolder);

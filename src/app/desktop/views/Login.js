@@ -240,14 +240,7 @@ const Login = () => {
                     </a>
                   </div>
                 </FooterLinks>
-                <div
-                  css={`
-                    cursor: pointer;
-                  `}
-                  onClick={() => dispatch(openModal('ChangeLogs'))}
-                >
-                  v{version}
-                </div>
+                <div css="cursor: pointer;">v{version}</div>
               </div>
               <p
                 css={`
