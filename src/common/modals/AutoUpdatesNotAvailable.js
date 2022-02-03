@@ -18,8 +18,10 @@ const AutoUpdatesNotAvailable = () => {
             margin-top: 20px;
           `}
         >
-          Please, update GDLauncher through your package manager or download the
-          new version from our website <a href="https://gdevs.io">here</a>
+          Please, update NordLauncher from the{' '}
+          <a href="https://github.com/oitsjustjose/NordLauncher/releases">
+            Releases page
+          </a>
         </div>
       </Container>
     </Modal>

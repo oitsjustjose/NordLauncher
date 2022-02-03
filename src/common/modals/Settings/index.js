@@ -153,7 +153,7 @@ export default function Settings() {
                 font-size: 16px;
               `}
             >
-              Support GDLauncher
+              Social Platforms
             </span>
             <div
               css={`

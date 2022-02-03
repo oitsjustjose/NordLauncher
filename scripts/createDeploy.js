@@ -124,8 +124,8 @@ const commonConfig = {
   config: {
     generateUpdatesFilesForAllChannels: true,
     npmRebuild: false,
-    productName: 'GDLauncher',
-    appId: 'org.gorilladevs.GDLauncher',
+    productName: 'NordLauncher',
+    appId: 'com.oitsjustjose.NordLauncher',
     files: [
       '!node_modules/**/*',
       'build/**/*',

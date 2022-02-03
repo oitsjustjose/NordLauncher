@@ -1,21 +1,23 @@
-import React, { useEffect, memo } from 'react';
+import { message } from 'antd';
+import { push } from 'connected-react-router';
+import { ipcRenderer } from 'electron';
+import React, { memo, useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { Switch } from 'react-router';
 import { useDidMount } from 'rooks';
 import styled from 'styled-components';
-import { Switch } from 'react-router';
-import { ipcRenderer } from 'electron';
-import { useSelector, useDispatch } from 'react-redux';
-import { push } from 'connected-react-router';
-import { message } from 'antd';
+import RouteBackground from '../../common/components/RouteBackground';
 import RouteWithSubRoutes from '../../common/components/RouteWithSubRoutes';
+import GlobalStyles from '../../common/GlobalStyles';
 import {
-  loginWithAccessToken,
+  checkClientToken,
   initManifests,
   initNews,
   loginThroughNativeLauncher,
+  loginWithAccessToken,
+  loginWithOAuthAccessToken,
   switchToFirstValidAccount,
-  checkClientToken,
-  updateUserData,
-  loginWithOAuthAccessToken
+  updateUserData
 } from '../../common/reducers/actions';
 import {
   load,
@@ -23,20 +25,18 @@ import {
   requesting
 } from '../../common/reducers/loading/actions';
 import features from '../../common/reducers/loading/features';
-import GlobalStyles from '../../common/GlobalStyles';
-import RouteBackground from '../../common/components/RouteBackground';
-import ga from '../../common/utils/analytics';
-import routes from './utils/routes';
-import { _getCurrentAccount } from '../../common/utils/selectors';
-import { isLatestJavaDownloaded } from './utils';
-import SystemNavbar from './components/SystemNavbar';
-import useTrackIdle from './utils/useTrackIdle';
 import { openModal } from '../../common/reducers/modals/actions';
-import Message from './components/Message';
+import ga from '../../common/utils/analytics';
 import {
   ACCOUNT_MICROSOFT,
   LATEST_JAVA_VERSION
 } from '../../common/utils/constants';
+import { _getCurrentAccount } from '../../common/utils/selectors';
+import Message from './components/Message';
+import SystemNavbar from './components/SystemNavbar';
+import { isLatestJavaDownloaded } from './utils';
+import routes from './utils/routes';
+import useTrackIdle from './utils/useTrackIdle';
 
 const Wrapper = styled.div`
   height: 100vh;
@@ -63,9 +63,7 @@ function DesktopRoot({ store }) {
   const javaPath = useSelector(state => state.settings.java.path);
   const javaLatestPath = useSelector(state => state.settings.java.pathLatest);
   const location = useSelector(state => state.router.location);
-  // const modals = useSelector(state => state.modals);
   const shouldShowDiscordRPC = useSelector(state => state.settings.discordRPC);
-  // const [contentStyle, setContentStyle] = useState({ transform: 'scale(1)' });
 
   message.config({
     top: 45,
@@ -175,18 +173,6 @@ function DesktopRoot({ store }) {
   }, [location.pathname, clientToken]);
 
   useTrackIdle(location.pathname);
-
-  // useEffect(() => {
-  //   if (
-  //     modals[0] &&
-  //     modals[0].modalType === 'Settings' &&
-  //     !modals[0].unmounting
-  //   ) {
-  //     setContentStyle({ transform: 'scale(0.4)' });
-  //   } else {
-  //     setContentStyle({ transform: 'scale(1)' });
-  //   }
-  // }, [modals]);
 
   return (
     <Wrapper>

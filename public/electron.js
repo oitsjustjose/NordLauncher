@@ -74,10 +74,10 @@ const edit = [
   ...(process.platform === 'darwin'
     ? [
         {
-          label: 'GDLauncher',
+          label: 'NordLauncher',
           submenu: [
             {
-              label: 'About GDLauncher',
+              label: 'About NordLauncher',
               role: 'about'
             },
             { type: 'separator' },
@@ -88,7 +88,7 @@ const edit = [
             },
             { type: 'separator' },
             {
-              label: 'Hide GDLauncher',
+              label: 'Hide NordLauncher',
               accelerator: 'Command+H',
               role: 'hide'
             },
@@ -103,7 +103,7 @@ const edit = [
             },
             { type: 'separator' },
             {
-              label: 'Quit GDLauncher',
+              label: 'Quit NordLauncher',
               accelerator: 'Command+Q',
               click: () => {
                 app.quit();
@@ -313,7 +313,7 @@ function createWindow() {
   tray = new Tray(nimage);
   const trayMenuTemplate = [
     {
-      label: 'GDLauncher',
+      label: 'NordLauncher',
       enabled: false
     },
     {
@@ -324,7 +324,7 @@ function createWindow() {
 
   const trayMenu = Menu.buildFromTemplate(trayMenuTemplate);
   tray.setContextMenu(trayMenu);
-  tray.setToolTip('GDLauncher');
+  tray.setToolTip('NordLauncher');
   tray.on('double-click', () => mainWindow.show());
 
   mainWindow.loadURL(
@@ -332,7 +332,7 @@ function createWindow() {
       ? 'http://localhost:3000'
       : `file://${path.join(__dirname, '../build/index.html')}`,
     {
-      userAgent: 'GDLauncher'
+      userAgent: 'NordLauncher'
     }
   );
   if (isDev) {
@@ -647,7 +647,7 @@ if (process.env.REACT_APP_RELEASE_TYPE === 'setup') {
   autoUpdater.allowPrerelease = allowUnstableReleases;
   autoUpdater.setFeedURL({
     owner: 'gorilla-devs',
-    repo: 'GDLauncher',
+    repo: 'NordLauncher',
     provider: 'github'
   });
 

@@ -1,7 +1,7 @@
 {
   "name": "nordlauncher",
   "version": "1.2.0",
-  "description": "GDLauncher is simple, yet powerful Minecraft custom launcher with a strong focus on the user experience",
+  "description": "NordLauncher is a Nord-Themed GDLauncher fork with UI Improvements and tweaks",
   "keywords": [
     "minecraft",
     "launcher",
@@ -14,11 +14,11 @@
     "webpack"
   ],
   "bugs": {
-    "url": "https://github.com/gorilla-devs/GDLauncher/issues"
+    "url": "https://github.com/oitsjustjose/NordLauncher/issues"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/gorilla-devs/GDLauncher.git"
+    "url": "git+https://github.com/oitsjustjose/NordLauncher.git"
   },
   "license": "GPL-3.0",
   "author": {

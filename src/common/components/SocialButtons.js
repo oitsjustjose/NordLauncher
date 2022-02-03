@@ -36,7 +36,7 @@ const SocialButtons = () => {
         }
       `}
     >
-      <a href="https://discord.geolosys.com">
+      <a href="https://discord.oitsjustjose.com">
         <div>
           <FontAwesomeIcon icon={faDiscord} size="lg" />
         </div>
