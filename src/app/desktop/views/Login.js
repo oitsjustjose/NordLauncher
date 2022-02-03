@@ -14,7 +14,7 @@ import { login, loginOAuth } from '../../../common/reducers/actions';
 import { load, requesting } from '../../../common/reducers/loading/actions';
 import features from '../../../common/reducers/loading/features';
 import backgroundGif from '../../../common/assets/bg.gif';
-import HorizontalLogo from '../../../ui/HorizontalLogo';
+import Logo from '../../../common/assets/appicon.png';
 import { openModal } from '../../../common/reducers/modals/actions';
 
 const LoginButton = styled(Button)`
@@ -91,6 +91,7 @@ const Background = styled.div`
 const Header = styled.div`
   display: flex;
   align-items: center;
+  justify-content: center;
 `;
 
 const Footer = styled.div`
@@ -181,7 +182,7 @@ const Login = () => {
         <Container>
           <LeftSide transitionState={transitionState}>
             <Header>
-              <HorizontalLogo size={200} />
+              <img src={Logo} alt="NordLauncher Logo" width="96" height="96" />
             </Header>
             <Form>
               <div>
