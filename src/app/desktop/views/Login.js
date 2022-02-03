@@ -290,12 +290,7 @@ const Login = () => {
               </div>
             </Footer>
           </LeftSide>
-          <Background transitionState={transitionState}>
-            {/* <video autoPlay muted loop>
-              <source src={backgroundVideo} type="video/webm" />
-            </video> */}
-            {/* <img src={backgroundGif} alt="bg.gif" /> */}
-          </Background>
+          <Background transitionState={transitionState} />
           <Loading transitionState={transitionState}>Loading...</Loading>
         </Container>
       )}

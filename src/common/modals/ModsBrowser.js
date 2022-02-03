@@ -1,41 +1,41 @@
 /* eslint-disable no-nested-ternary */
-import React, {
-  memo,
-  useEffect,
-  useState,
-  forwardRef,
-  useContext
-} from 'react';
-import { ipcRenderer } from 'electron';
-import AutoSizer from 'react-virtualized-auto-sizer';
-import styled, { ThemeContext } from 'styled-components';
-import memoize from 'memoize-one';
-import InfiniteLoader from 'react-window-infinite-loader';
-import ContentLoader from 'react-content-loader';
-import { Input, Select, Button } from 'antd';
-import { useDispatch, useSelector } from 'react-redux';
-import { useDebouncedCallback } from 'use-debounce';
-import { FixedSizeList as List } from 'react-window';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCheckCircle } from '@fortawesome/free-regular-svg-icons';
 import {
   faBomb,
+  faDownload,
   faExclamationCircle,
-  faWrench,
-  faDownload
+  faWrench
 } from '@fortawesome/free-solid-svg-icons';
-import Modal from '../components/Modal';
-import { getSearch, getAddonFiles } from '../api';
-import { openModal } from '../reducers/modals/actions';
-import { _getInstance } from '../utils/selectors';
-import { installMod } from '../reducers/actions';
-import { FABRIC, FORGE } from '../utils/constants';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { Button, Input, Select } from 'antd';
+import { ipcRenderer } from 'electron';
+import memoize from 'memoize-one';
+import React, {
+  forwardRef,
+  memo,
+  useContext,
+  useEffect,
+  useState
+} from 'react';
+import ContentLoader from 'react-content-loader';
+import { useDispatch, useSelector } from 'react-redux';
+import AutoSizer from 'react-virtualized-auto-sizer';
+import { FixedSizeList as List } from 'react-window';
+import InfiniteLoader from 'react-window-infinite-loader';
+import styled, { ThemeContext } from 'styled-components';
+import { useDebouncedCallback } from 'use-debounce';
 import {
-  getFirstPreferredCandidate,
   filterFabricFilesByVersion,
   filterForgeFilesByVersion,
+  getFirstPreferredCandidate,
   getPatchedInstanceType
 } from '../../app/desktop/utils';
+import { getAddonFiles, getSearch } from '../api';
+import Modal from '../components/Modal';
+import { installMod } from '../reducers/actions';
+import { openModal } from '../reducers/modals/actions';
+import { FABRIC, FORGE } from '../utils/constants';
+import { _getInstance } from '../utils/selectors';
 
 const RowContainer = styled.div`
   display: flex;
@@ -92,6 +92,22 @@ const ModsIconBg = styled.div`
   z-index: 0;
 `;
 
+const Summary = styled.div`
+  position: absolute;
+  top: -1rem;
+  transition: opacity ease-in-out 250ms;
+  background: ${props => props.theme.palette.primary.light};
+  padding: 0.25rem 0.5rem;
+  border-radius: 8px;
+  font-size: 13px;
+  color: #2e3440;
+  opacity: 1;
+  &.hidden {
+    top: -10000000000rem;
+    opacity: 0;
+  }
+`;
+
 const ModsListWrapper = ({
   // Are there more items to load?
   // (This information comes from the most recent API request.)
@@ -139,6 +155,7 @@ const ModsListWrapper = ({
   const Row = memo(({ index, style, data }) => {
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
+    const [hover, setHover] = useState(false);
     const curseReleaseChannel = useSelector(
       state => state.settings.curseReleaseChannel
     );
@@ -164,6 +181,8 @@ const ModsListWrapper = ({
 
     return (
       <RowContainer
+        onMouseEnter={() => setHover(true)}
+        onMouseLeave={() => setHover(false)}
         isInstalled={isInstalled}
         style={{
           ...style,
@@ -176,7 +195,6 @@ const ModsListWrapper = ({
       >
         {isInstalled && <ModInstalledIcon icon={faCheckCircle} />}
         {isInstalled && <ModsIconBg />}
-
         <RowInnerContainer>
           <RowContainerImg
             style={{
@@ -205,6 +223,8 @@ const ModsListWrapper = ({
             }}
           >
             {item.name}
+
+            <Summary className={hover ? '' : 'hidden'}>{item.summary}</Summary>
           </div>
         </RowInnerContainer>
         {!isInstalled ? (
