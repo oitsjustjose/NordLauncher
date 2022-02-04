@@ -93,20 +93,11 @@ const ModsIconBg = styled.div`
 `;
 
 const Summary = styled.div`
-  position: absolute;
-  top: -1rem;
-  transition: opacity ease-in-out 250ms;
-  background: ${props => props.theme.palette.primary.light};
-  padding: 0.25rem 0.5rem;
-  border-radius: 8px;
-  font-size: 13px;
-  color: #2e3440;
-  opacity: 1;
-  &.hidden {
-    top: -10000000000rem;
-    opacity: 0;
-  }
+  font-size: 0.8rem;
+  font-weight: normal;
 `;
+
+const MAX_SUMMARY_LEN = 100;
 
 const ModsListWrapper = ({
   // Are there more items to load?
@@ -155,7 +146,6 @@ const ModsListWrapper = ({
   const Row = memo(({ index, style, data }) => {
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
-    const [hover, setHover] = useState(false);
     const curseReleaseChannel = useSelector(
       state => state.settings.curseReleaseChannel
     );
@@ -181,8 +171,6 @@ const ModsListWrapper = ({
 
     return (
       <RowContainer
-        onMouseEnter={() => setHover(true)}
-        onMouseLeave={() => setHover(false)}
         isInstalled={isInstalled}
         style={{
           ...style,
@@ -223,8 +211,11 @@ const ModsListWrapper = ({
             }}
           >
             {item.name}
-
-            <Summary className={hover ? '' : 'hidden'}>{item.summary}</Summary>
+            <Summary>
+              {item.summary.length < MAX_SUMMARY_LEN
+                ? item.summary
+                : `${item.summary.slice(0, MAX_SUMMARY_LEN)}...`}
+            </Summary>
           </div>
         </RowInnerContainer>
         {!isInstalled ? (
